@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "power_generate"
+require "canpe"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

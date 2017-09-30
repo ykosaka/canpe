@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "power_generate/version"
+require "canpe/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "power_generate"
-  spec.version       = PowerGenerate::VERSION
+  spec.name          = "canpe"
+  spec.version       = Canpe::VERSION
   spec.authors       = ["Yoshinori Kosaka"]
   spec.email         = ["yoshinori.ksk@gmail.com"]
 
-  spec.summary       = 'power_generate is a customizable template generator written by Ruby.'
+  spec.summary       = 'canpe is a customizable template generator written by Ruby.'
   spec.description   = ''
   spec.homepage      = ''
   spec.license       = 'MIT'

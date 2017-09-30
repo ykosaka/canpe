@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require 'power_generate/command'
+require 'canpe/command'
 
-PowerGenerate::Command.start(ARGV)
+Canpe::Command.start(ARGV)

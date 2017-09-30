@@ -1,9 +1,9 @@
 require 'thor'
-require 'power_generate/template_store'
+require 'canpe/template_store'
 require 'tilt'
 require 'pry'
 
-module PowerGenerate
+module Canpe
   class Scaffold
     attr_reader :template_name
     attr_reader :template_dir

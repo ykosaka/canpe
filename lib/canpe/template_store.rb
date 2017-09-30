@@ -3,13 +3,13 @@ require 'active_support/core_ext'
 require 'fileutils'
 require 'pry'
 
-module PowerGenerate
+module Canpe
   class TemplateStore
     attr_reader :root_url, :templates_dir
 
     def initialize(options = {})
       @root_url = options['root_dir_path'] || ENV['HOME']
-      @templates_dir = options['template_dir_name'] || File.join('.power_generate', 'templates')
+      @templates_dir = options['template_dir_name'] || File.join('.canpe', 'templates')
 
       FileUtils.mkdir_p templates_root unless Dir.exists?(templates_root)
     end
