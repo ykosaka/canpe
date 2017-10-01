@@ -1,18 +1,18 @@
 require 'thor'
-require 'canpe/template_store'
+require 'canpe/repository_store'
 require 'tilt'
 require 'pry'
 
 module Canpe
   class Scaffold
-    attr_reader :template_name
-    attr_reader :template_dir
-    attr_reader :template_file_paths
+    attr_reader :repository_name
+    attr_reader :repository_dir
+    attr_reader :repository_file_paths
 
-    def initialize(template_name, options = {})
-      @template_name = template_name
-      @template_dir = TemplateStore.new.template_dir(template_name)
-      @template_file_paths = TemplateStore.new.relative_template_file_paths(template_name)
+    def initialize(repository_name, options = {})
+      @repository_name = repository_name
+      @repository_dir = RepositoryStore.new.repository_dir(repository_name)
+      @repository_file_paths = RepositoryStore.new.relative_repository_file_paths(repository_name)
     end
 
     def source_root
@@ -24,7 +24,7 @@ module Canpe
     end
 
     def generate
-      template_file_paths.each do |path|
+      repository_file_paths.each do |path|
         if Tilt[File.extname(path)].present?
           copy_template_file(path)
         else
