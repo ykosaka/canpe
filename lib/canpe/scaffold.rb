@@ -1,22 +1,19 @@
 require 'thor'
+require 'canpe/repository'
 require 'canpe/repository_store'
 require 'tilt'
 require 'pry'
 
 module Canpe
   class Scaffold
-    attr_reader :repository_name
-    attr_reader :repository_dir
-    attr_reader :repository_file_paths
+    attr_reader :repository
 
-    def initialize(repository_name, options = {})
-      @repository_name = repository_name
-      @repository_dir = RepositoryStore.new.repository_dir(repository_name)
-      @repository_file_paths = RepositoryStore.new.relative_repository_file_paths(repository_name)
+    def initialize(repository_name)
+      @repository = Repository.new(repository_name)
     end
 
     def source_root
-      template_dir
+      repository.templates_url
     end
 
     def destination_root
@@ -24,11 +21,15 @@ module Canpe
     end
 
     def generate
-      repository_file_paths.each do |path|
-        if Tilt[File.extname(path)].present?
-          copy_template_file(path)
+      repository.file_paths.each do |path|
+        if File.directory?(source_path(path))
+          create_directory(path)
         else
-          copy_file(path)
+          if Tilt[File.extname(path)].present?
+            copy_template_file(path)
+          else
+            copy_file(path)
+          end
         end
       end
     end
@@ -39,12 +40,16 @@ module Canpe
       end
     end
 
+    def create_directory(path)
+      FileUtils.mkdir_p(File.join(destination_root, path))
+    end
+
     def copy_file(path)
-      File.copy(source_path(path), destination_root)
+      FileUtils.cp(source_path(path), destination_path(path))
     end
 
     def copy_template_file(path)
-      template = Tilt.new(File.join(template_dir, path))
+      template = Tilt.new(File.join(repository.templates_url, path))
       File.write(destination_path(path), template.render)
     end
 
@@ -59,8 +64,7 @@ module Canpe
     end
 
     def destination_path(path)
-      new_path = trim_file_ext(path)
-      File.join(destination_root, new_path)
+      File.join(destination_root, path)
     end
 
     def trim_file_ext(path)
