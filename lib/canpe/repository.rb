@@ -28,7 +28,7 @@ module Canpe
     end
 
     def binding_options
-      @_binding_options = YAML.load_file(binding_option_url)
+      @_binding_options ||= YAML.load_file(binding_option_url)
     end
 
     def file_paths(absolute_path: false)
