@@ -30,13 +30,13 @@ Gem::Specification.new do |spec|
   spec.executables   = ['canpe']
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "thor", "~> 0"
-  spec.add_dependency "tilt", "~> 0"
+  spec.add_dependency "thor", "~> 0.20"
+  spec.add_dependency "tilt", "~> 2.0"
   spec.add_dependency "activesupport", "~> 4"
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry", "~> 0"
-  spec.add_development_dependency "pry-byebug", "~> 0"
-  spec.add_development_dependency "awesome_print", "~> 0"
+  spec.add_development_dependency "pry-byebug", "~> 3.5"
+  spec.add_development_dependency "awesome_print", "~> 1.8"
 end
