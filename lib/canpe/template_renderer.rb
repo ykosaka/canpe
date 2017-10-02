@@ -1,9 +1,54 @@
+require 'canpe/template_binding'
+
 module Canpe
   class TemplateRenderer
-    attr_accessor :injected_hash
+    attr_accessor :repository_operation, :injected_hash
 
-    def initialize(hash = {})
+    def initialize(repository_operation, hash = {})
+      @repository_operation = repository_operation
       @injected_hash = hash
+    end
+
+    def repository
+      repository_operation.repository
+    end
+
+    def prepare
+      hash = {}
+
+      puts 'skip variable injection.' and return if repository.binding_options['variables'].blank?
+
+      puts 'you need to set variables to generate codes!'
+      repository.binding_options['variables'].each.with_index(1) do |entry, index|
+        puts "#{index}: #{entry['name']} (#{entry['type']}) "
+      end
+
+      puts ''
+      puts 'If you want to stop setting array, let it blank and press enter.'
+
+      repository.binding_options['variables'].each do |entry|
+        if entry['type'] == 'string'
+          print "#{entry['name']} ?) "
+          hash[entry['name']] = STDIN.gets.chomp
+        elsif entry['type'] == 'array'
+          array = []
+          loop do
+            print "#{entry['name']}[#{array.size}] ?) "
+            input = STDIN.gets.chomp
+
+            if input.present?
+              array << input
+            else
+              break
+            end
+          end
+
+          hash[entry['name']] = array
+        end
+      end
+      injected_hash.merge!(hash)
+
+      puts "finished variable settings: #{hash}"
     end
 
     def render_string(str)

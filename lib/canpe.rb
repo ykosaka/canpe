@@ -4,6 +4,7 @@ require 'canpe/version'
 require 'canpe/repository'
 require 'canpe/repository_store'
 require 'canpe/repository_operation'
+require 'canpe/repository_operation_context'
 require 'canpe/scaffold'
 require 'canpe/file_manipulation'
 

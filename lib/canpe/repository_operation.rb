@@ -3,60 +3,28 @@ require 'active_support/core_ext'
 require 'tilt'
 
 require 'canpe/file_manipulation'
-require 'canpe/template_binding'
 require 'canpe/template_renderer'
+require 'canpe/repository_operation_context'
 
 module Canpe
   class RepositoryOperation
     include FileManipulation
 
-    attr_reader :repository, :renderer
+    attr_reader :repository, :renderer, :context
 
     def initialize(repository)
       @repository = repository
-      @renderer = TemplateRenderer.new
+      @renderer = TemplateRenderer.new(self)
+      @context = RepositoryOperationContext.new(self)
     end
 
     def prepare_operation
-      hash = {}
-
-      puts 'skip variable injection.' and return if repository.binding_options['variables'].blank?
-
-      puts 'you need to set variables to generate codes!'
-      repository.binding_options['variables'].each.with_index(1) do |entry, index|
-        puts "#{index}: #{entry['name']} (#{entry['type']}) "
-      end
-
-      puts ''
-      puts 'If you want to stop setting array, let it blank and press enter.'
-
-      repository.binding_options['variables'].each do |entry|
-        if entry['type'] == 'string'
-          print "#{entry['name']} ?) "
-          hash[entry['name']] = STDIN.gets.chomp
-        elsif entry['type'] == 'array'
-          array = []
-          loop do
-            print "#{entry['name']}[#{array.size}] ?) "
-            input = STDIN.gets.chomp
-
-            if input.present?
-              array << input
-            else
-              break
-            end
-          end
-
-          hash[entry['name']] = array
-        end
-      end
-      renderer.injected_hash.merge!(hash)
-
-      puts "finished variable settings: #{hash}"
+      context.prepare
+      renderer.prepare
     end
 
     def generate_file(path)
-      if File.directory?(source_file_path(path))
+      if File.directory?(context.source_file_path(path))
         create_evaluated_directory(path)
       else
         copy_evaluated_file(path)
@@ -65,35 +33,17 @@ module Canpe
 
     def create_evaluated_directory(path)
       path = renderer.render_string(path)
-      url = File.join(destination_root, path)
+      url = File.join(context.destination_root, path)
       create_directory(url)
     end
 
     def copy_evaluated_file(path)
-      template_file = renderer.render_file(File.join(repository.templates_url, path))
-      copy_file(template_file.path, destination_file_path(path))
+      template_file = renderer.render_file(context.source_file_path(path))
+      copy_file(template_file.path, context.destination_file_path(path))
     end
 
     def delete_file(path)
-      super destination_file_path(path)
-    end
-
-    private
-
-    def source_root
-      repository.templates_url
-    end
-
-    def destination_root
-      Dir.pwd
-    end
-
-    def source_file_path(path)
-      File.join(source_root, path)
-    end
-
-    def destination_file_path(path)
-      renderer.render_string(File.join(destination_root, path))
+      super context.destination_file_path(path)
     end
   end
 end
