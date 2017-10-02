@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'thor'
 
-require 'canpe/scaffold'
+require 'canpe/runner'
 require 'canpe/repository_store'
 
 class Canpe::Command < Thor
@@ -15,7 +15,7 @@ class Canpe::Command < Thor
       exit 1
     end
 
-    Canpe::Scaffold.new(repository_name).generate
+    Canpe::Runner.new(repository_name).generate
   end
 
   desc "destroy repo_name", "Delete generated files"
@@ -27,7 +27,7 @@ class Canpe::Command < Thor
       exit 1
     end
 
-    Canpe::Scaffold.new(repository_name).destroy
+    Canpe::Runner.new(repository_name).destroy
   end
 
   desc "list", "List up registered repositorys"

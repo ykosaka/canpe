@@ -6,7 +6,7 @@ require 'tilt'
 require 'pry'
 
 module Canpe
-  class Scaffold
+  class Runner
     attr_reader :repository, :operation
 
     def initialize(repository_name)

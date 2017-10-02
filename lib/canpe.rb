@@ -5,7 +5,7 @@ require 'canpe/repository'
 require 'canpe/repository_store'
 require 'canpe/repository_operation'
 require 'canpe/repository_operation_context'
-require 'canpe/scaffold'
+require 'canpe/runner'
 require 'canpe/file_manipulation'
 
 module Canpe
