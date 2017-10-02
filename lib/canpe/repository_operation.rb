@@ -1,6 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'tilt/erb'
+require 'tilt'
 
 require 'canpe/template_binding'
 

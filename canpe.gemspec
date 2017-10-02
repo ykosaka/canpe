@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yoshinori Kosaka"]
   spec.email         = ["yoshinori.ksk@gmail.com"]
 
-  spec.summary       = 'canpe is a customizable template generator written by Ruby.'
+  spec.summary       = 'customizable template generator written by Ruby.'
   spec.description   = ''
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/ykosaka/canpe'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -26,17 +26,17 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^cli/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = ['canpe']
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "thor"
-  spec.add_dependency "tilt"
-  spec.add_dependency "activesupport"
+  spec.add_dependency "thor", "~> 0"
+  spec.add_dependency "tilt", "~> 0"
+  spec.add_dependency "activesupport", "~> 4"
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "pry"
-  spec.add_development_dependency "pry-byebug"
-  spec.add_development_dependency "awesome_print"
+  spec.add_development_dependency "pry", "~> 0"
+  spec.add_development_dependency "pry-byebug", "~> 0"
+  spec.add_development_dependency "awesome_print", "~> 0"
 end
