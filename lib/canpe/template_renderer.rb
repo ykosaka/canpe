@@ -16,7 +16,11 @@ module Canpe
     def prepare
       hash = {}
 
-      puts 'skip variable injection.' and return if repository.binding_options['variables'].blank?
+      if repository.binding_options['variables'].blank?
+        return puts 'skip variable injection.'
+      end
+
+      binding.pry
 
       puts 'you need to set variables to generate codes!'
       repository.binding_options['variables'].each.with_index(1) do |entry, index|

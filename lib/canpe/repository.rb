@@ -7,20 +7,21 @@ require 'canpe/repository_store'
 
 module Canpe
   class Repository
-    attr_reader :name
+    attr_reader :name, :store
 
-    def initialize(name)
+    def initialize(name, store)
       @name = name
+      @store = store
     end
 
     # Directory which is root directory of this repository
     def repository_url
-      File.join(RepositoryStore.repositories_root, name)
+      File.join(store.repositories_root, name)
     end
 
     # Directory in which templates file exists
     def templates_url
-      File.join(RepositoryStore.repositories_root, name, 'templates')
+      File.join(store.repositories_root, name, 'templates')
     end
 
     def binding_option_url
@@ -28,7 +29,7 @@ module Canpe
     end
 
     def binding_options
-      @_binding_options ||= YAML.load_file(binding_option_url)
+      @_binding_options ||= File.exists?(binding_option_url) ? YAML.load_file(binding_option_url) : {}
     end
 
     def file_paths(absolute_path: false)
@@ -39,6 +40,14 @@ module Canpe
         base = Pathname.new(templates_url)
         files.map { |file| Pathname.new(file).relative_path_from(base) }
       end
+    end
+
+    def to_s
+      "#{store.name}::#{name}"
+    end
+
+    def match?(query)
+      /#{query}/ === to_s
     end
   end
 end

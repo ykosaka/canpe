@@ -9,8 +9,8 @@ module Canpe
   class Runner
     attr_reader :repository, :operation
 
-    def initialize(repository_name)
-      @repository = Repository.new(repository_name)
+    def initialize(repository)
+      @repository = repository
       @operation = RepositoryOperation.new(@repository)
     end
 
