@@ -1,4 +1,4 @@
-require 'canpe/reflector'
+require 'canpe/template_binding_reflector'
 
 module Canpe
   class TemplateBindingContainer
@@ -12,7 +12,7 @@ module Canpe
       if hash.key? name
         hash[name]
       else
-        Reflector.new([{method: name, args: []}])
+        TemplateBindingReflector.new([{method: name, args: []}])
       end
     end
   end

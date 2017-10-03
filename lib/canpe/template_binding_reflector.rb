@@ -1,5 +1,5 @@
 module Canpe
-  class Reflector
+  class TemplateBindingReflector
     attr_reader :call_list
 
     def initialize(call_list = [])
