@@ -1,7 +1,6 @@
 # Canpe
 
-Canpe is a template file repository, from which you can generate scaffold code to any projects.
-If you write similar codes which is only slightly different, you can generate codes automatically.
+Canpe is a template-based file generator.
 
 ## Installation
 
@@ -9,63 +8,60 @@ If you write similar codes which is only slightly different, you can generate co
 
 ## Usage
 
-Canpe stores template files as a repository. The default directory is `~/.canpe_repos`.
-
-### Command
+When run the `canpe create sample_repository`, canpe initialize new repo in the current directory.
 
 ```
-canpe g bootstrap_scaffold --class_name user --forms name:string age:integer birthday:datetime
+$ canpe create sample_repository
+create directory: ./.canpe_repos/sample_repository/templates
+copy ./.canpe_repos/sample_repository/binding.yml
 ```
 
-### Repository Structure
-
-For example, Like this.
+`binding.yml` defines the variables which you can access from templates.
 
 ```
-.canpe_repos/
-└── sample_scaffold
-    ├── binding.rb
-    └── templates
-        └── app
-            ├── controllers
-            │   └── %pluralized_class_name%_controller.rb.erb
-            └── views
-                └── %pluralized_class_name%
-                    ├── edit.html.erb.erb
-                    ├── index.html.erb.erb
-                    ├── new.html.erb.erb
-                    └── show.html.erb.erb
-```
+variables:
+- name: sample_variable
+  type: string
+- name: sample_array
+  type: array
+``` 
 
-Canpe is compatible with template engines like ERB, Slim, etc.
-To modify the template, `Canpe.options` provides the parsed arguments.
+Set your template files under the templates directory.
+Each file is automatically evaluated as ERB template.
 
 ```
-<%%= form_with model: @<%= Canpe.options[:class_name] %> do |f| %>
-  <% Canpe.options[:form].each do |pairs| %>
-     <% column_name = pairs.first; column_type = pairs.last %>
-     
-     <% if column_type == 'integer' %>
-       ...
-     <% end %>
-  <% end %>
-<% end %>
+<%= canpe[:sample_variables] %>
+<%= canpe[:sample_array].join ', ' %>
+``` 
+
+Then run `canpe generate sample_repository`.
+
+```
+$ bundle exec bin/canpe generate sample_repository
+working directory (/Users/Yoshinori/gem_projects/canpe) ? 
+you need to set variables to generate codes!
+1: sample_variable (string) 
+2: sample_array (array) 
+
+If you want to stop setting array, let it blank and press enter.
+sample_variable ?) Hello, world
+sample_array[0] ?) 1
+sample_array[1] ?) 2
+sample_array[2] ?) 3
+sample_array[3] ?) 
+finished variable settings: {"sample_variable"=>"Hello, world", "sample_array"=>["1", "2", "3"]}
+copy: /Users/Yoshinori/gem_projects/canpe/hello
+
 ```
 
-If you want to customize the variables, you can create `binding.rb`.
-In this file, you can validate inputs, set default values, define other variables.
+If you set sample_variable as 'Hello, world', and sample_array as [1, 2, 3],
+This template is rendered like this.
 
-```ruby
-
-Canpe.define_binding do |b|
-  b.validates :class_name, presence: true
-  b.default :pluralize, true
-
-  b.define_variable :class_name, b.options[:class_name], default: 'user'
-  b.define_variable :pluralize_class_name, b.options[:class_name].pluralize
-  b.define_variable :columns, b.options[:form]
-end
 ```
+Hello, world
+1, 2, 3
+```
+
 
 ## Development
 
