@@ -17,16 +17,13 @@ class Canpe::Command < Thor
       exit 1
     end
 
-    Canpe::Runner.new(repository).generate
+    Canpe::Runner.generate repository
   end
 
   desc "create repo_name", "create repository"
 
   def create(repository_name)
-    print 'working directory(canpe_working_dir) ? '
-    directory_name = gets || 'canpe_working_dir'
-
-    Canpe::Runner.new(repository_name)
+    Canpe::Runner.create repository_name
   end
 
   desc "destroy repo_name", "Delete generated files"
@@ -40,7 +37,7 @@ class Canpe::Command < Thor
       exit 1
     end
 
-    Canpe::Runner.new(repository).destroy
+    Canpe::Runner.destroy repository
   end
 
   desc "list", "List up registered repositorys"

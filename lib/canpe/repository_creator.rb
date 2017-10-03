@@ -1,13 +1,17 @@
+require 'canpe/file_manipulation'
+require 'canpe/repository_store'
+
 module Canpe
   class RepositoryCreator
-    class << self
-      def init(path)
+    include FileManipulation
+    attr_reader :repository_name
 
-      end
+    def initialize(repository_name)
+      @repository_name = repository_name
+    end
 
-      def operation(path)
-        @_operation ||= RepositoryOperation.new(path)
-      end
+    def execute
+      create_directory(File.join(Dir.pwd, RepositoryStore::DEFAULT_REPOSITORY_DIR, repository_name, 'templates'))
     end
   end
 end
