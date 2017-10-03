@@ -4,7 +4,7 @@ module Canpe
   class TemplateRenderer
     attr_accessor :repository_operation, :injected_hash
 
-    def initialize(repository_operation, hash = {})
+    def initialize(repository_operation, hash = {}.with_indifferent_access)
       @repository_operation = repository_operation
       @injected_hash = hash
     end
@@ -19,8 +19,6 @@ module Canpe
       if repository.binding_options['variables'].blank?
         return puts 'skip variable injection.'
       end
-
-      binding.pry
 
       puts 'you need to set variables to generate codes!'
       repository.binding_options['variables'].each.with_index(1) do |entry, index|
@@ -57,13 +55,13 @@ module Canpe
 
     def render_string(str)
       template = Tilt::ERBTemplate.new { str.to_s }
-      template.render(Canpe::TemplateBinding.new, injected_hash)
+      template.render(Canpe::TemplateBinding.new(injected_hash))
     end
 
     def render_file(path)
       Tempfile.new.tap do |file|
         template = Tilt::ERBTemplate.new(path)
-        file.write(template.render(Canpe::TemplateBinding.new, injected_hash))
+        file.write(template.render(Canpe::TemplateBinding.new(injected_hash)))
         file.rewind
       end
     end
