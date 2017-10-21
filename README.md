@@ -88,6 +88,11 @@ HOME::sample_repository
 .rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gems/canpe-0.1.0::default_repository
 ```
 
+## Advanced Usage
+
+File name is also evaluated as ERB.
+look at `.canpe_repos/default_repository/<%= canpe[:repository_name] %>` in this repository.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

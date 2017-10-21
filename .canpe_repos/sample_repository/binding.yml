@@ -1,5 +1,0 @@
-variables:
-- name: sample_string
-  type: string
-- name: sample_array
-  type: array
