@@ -83,7 +83,7 @@ Hello, world
 You can list up registered repositories.
 
 ```
-Yoshinori@ykosaka-MacBook-Pro:~$ canpe list
+$ canpe list
 HOME::sample_repository
 .rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gems/canpe-0.1.0::default_repository
 ```
