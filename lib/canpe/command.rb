@@ -26,20 +26,6 @@ class Canpe::Command < Thor
     Canpe::Runner.create repository_name
   end
 
-  desc "destroy repo_name", "Delete generated files"
-
-  def destroy(repository_name)
-    repository_list = Canpe::RepositoryStore.repository_list
-    repository = repository_list.find { |repository| repository.match? repository_name }
-
-    if repository.blank?
-      $stderr.puts "Could not find repository \"#{repository_name}\"."
-      exit 1
-    end
-
-    Canpe::Runner.destroy repository
-  end
-
   desc "list", "List up registered repositorys"
 
   def list
