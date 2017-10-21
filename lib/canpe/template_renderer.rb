@@ -31,6 +31,8 @@ module Canpe
       puts ''
       puts 'If you want to stop setting array, let it blank and press enter.'
 
+      hash = {}
+
       repository.binding_options['variables'].each do |entry|
         if entry['type'] == 'string'
           print "#{entry['name']} ?) "
@@ -57,13 +59,13 @@ module Canpe
     end
 
     def render_string(str)
-      template = Tilt::ERBTemplate.new { str.to_s }
+      template = Tilt::ERBTemplate.new(trim: false) { str.to_s }
       template.render(Canpe::TemplateBinding.new(injected_hash))
     end
 
     def render_file(path)
       Tempfile.new.tap do |file|
-        template = Tilt::ERBTemplate.new(path)
+        template = Tilt::ERBTemplate.new(path, trim: false)
         file.write(template.render(Canpe::TemplateBinding.new(injected_hash)))
         file.rewind
       end

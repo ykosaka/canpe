@@ -20,7 +20,7 @@ copy ./.canpe_repos/sample_repository/binding.yml
 
 ```
 variables:
-- name: sample_variable
+- name: sample_string
   type: string
 - name: sample_array
   type: array
@@ -30,7 +30,7 @@ Set your template files under the templates directory.
 Each file is automatically evaluated as ERB template.
 
 ```
-<%= canpe[:sample_variable] %>
+<%= canpe[:sample_string] %>
 <%= canpe[:sample_array].join ', ' %>
 ``` 
 
