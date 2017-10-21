@@ -37,7 +37,7 @@ Each file is automatically evaluated as ERB template.
 Then run `canpe generate sample_repository`.
 
 ```
-$ bundle exec bin/canpe generate sample_repository
+$ canpe generate sample_repository
 working directory (/Users/Yoshinori/gem_projects/canpe) ? 
 you need to set variables to generate codes!
 1: sample_string (string) 
