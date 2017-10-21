@@ -40,21 +40,21 @@ Then run `canpe generate sample_repository`.
 $ bundle exec bin/canpe generate sample_repository
 working directory (/Users/Yoshinori/gem_projects/canpe) ? 
 you need to set variables to generate codes!
-1: sample_variable (string) 
+1: sample_string (string) 
 2: sample_array (array) 
 
 If you want to stop setting array, let it blank and press enter.
-sample_variable ?) Hello, world
+sample_string ?) Hello, world
 sample_array[0] ?) 1
 sample_array[1] ?) 2
 sample_array[2] ?) 3
 sample_array[3] ?) 
-finished variable settings: {"sample_variable"=>"Hello, world", "sample_array"=>["1", "2", "3"]}
+finished variable settings: {"sample_string"=>"Hello, world", "sample_array"=>["1", "2", "3"]}
 copy: /Users/Yoshinori/gem_projects/canpe/hello
 
 ```
 
-If you set sample_variable as 'Hello, world', and sample_array as [1, 2, 3],
+If you set sample_string as 'Hello, world', and sample_array as [1, 2, 3],
 This template is rendered like this.
 
 ```
