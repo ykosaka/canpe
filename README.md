@@ -80,6 +80,14 @@ Hello, world
 1, 2, 3
 ```
 
+You can list up registered repositories.
+
+```
+Yoshinori@ykosaka-MacBook-Pro:~$ canpe list
+HOME::sample_repository
+.rbenv/versions/2.4.0/lib/ruby/gems/2.4.0/gems/canpe-0.1.0::default_repository
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

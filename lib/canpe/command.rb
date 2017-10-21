@@ -30,7 +30,7 @@ class Canpe::Command < Thor
 
   def list
     repository_list = Canpe::RepositoryStore.repository_list
-    repository_list.each do |repository_name|
+    repository_list.map(&:to_s).uniq.each do |repository_name|
       puts repository_name
     end
   end
