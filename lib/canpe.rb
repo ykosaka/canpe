@@ -1,6 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'canpe/version'
+require 'canpe/command'
 require 'canpe/repository'
 require 'canpe/repository_store'
 require 'canpe/repository_operation'

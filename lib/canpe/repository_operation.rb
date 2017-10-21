@@ -18,9 +18,9 @@ module Canpe
       @context = RepositoryOperationContext.new(self)
     end
 
-    def prepare_operation
-      context.prepare
-      renderer.prepare
+    def prepare_operation(options = {})
+      context.prepare(options)
+      renderer.prepare(options)
     end
 
     def generate_file(path)

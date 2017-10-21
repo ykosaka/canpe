@@ -33,7 +33,9 @@ module Canpe
     end
 
     def file_paths(absolute_path: false)
-      files = Dir.glob(File.join(templates_url, '**', '*'))
+      files = Dir.glob(File.join(templates_url, '**', '*'), File::FNM_DOTMATCH)
+      files = files.reject { |e| [".", ".."].any? { |s| s== File::basename(e) } }
+
       if absolute_path
         files.map { |file| Pathname.new(file) }
       else

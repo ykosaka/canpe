@@ -9,16 +9,10 @@ require 'pry'
 module Canpe
   class Runner
     class << self
-      def generate(repository)
+      def generate(repository, options: {})
         operation = RepositoryOperation.new(repository)
-        operation.prepare_operation
+        operation.prepare_operation(options)
         repository.file_paths.each { |path| operation.generate_file(path) }
-      end
-
-      def destroy(repository)
-        operation = RepositoryOperation.new(repository)
-        operation.prepare_operation
-        repository.file_paths.each { |path| operation.delete_file(path) }
       end
 
       def create(repository_name)

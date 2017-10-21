@@ -13,8 +13,11 @@ module Canpe
       repository_operation.repository
     end
 
-    def prepare
-      hash = {}
+    def prepare(options)
+      if options.key? :variables
+        injected_hash.merge!(options[:variables])
+        return
+      end
 
       if repository.binding_options['variables'].blank?
         return puts 'skip variable injection.'

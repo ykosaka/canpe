@@ -9,7 +9,7 @@ module Canpe
   class RepositoryStore
     attr_reader :path
 
-    LOAD_PATHS = [Dir.pwd, ENV['HOME']]
+    LOAD_PATHS = [Dir.pwd, ENV['HOME'], Gem::Specification.find_by_name('canpe').gem_dir]
     DEFAULT_REPOSITORY_DIR = '.canpe_repos'
 
     class << self

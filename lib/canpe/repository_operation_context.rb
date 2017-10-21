@@ -11,17 +11,21 @@ module Canpe
       repository_operation.repository
     end
 
-    def prepare
-      print "working directory (#{Dir.pwd}) ? "
-      path = STDIN.gets.chomp
+    def prepare(options)
+      working_directory = options[:working_directory]
 
-      if path.blank?
-        path = Dir.pwd
-      elsif !File.directory?(path)
-        raise FileManipulation::NotDirectoryError, "#{path} is not a directory."
+      if working_directory.nil?
+        print "working directory (#{Dir.pwd}) ? "
+        working_directory = STDIN.gets.chomp
       end
 
-      @root_directory = path
+      if working_directory.blank?
+        working_directory = Dir.pwd
+      elsif !File.directory?(working_directory)
+        raise FileManipulation::NotDirectoryError, "#{working_directory} is not a directory."
+      end
+
+      @root_directory = working_directory
     end
 
     def source_root
