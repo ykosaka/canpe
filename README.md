@@ -30,7 +30,7 @@ Set your template files under the templates directory.
 Each file is automatically evaluated as ERB template.
 
 ```
-<%= canpe[:sample_variables] %>
+<%= canpe[:sample_variable] %>
 <%= canpe[:sample_array].join ', ' %>
 ``` 
 
