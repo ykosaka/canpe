@@ -12,8 +12,27 @@ When run the `canpe create sample_repository`, canpe initialize new repo in the 
 
 ```
 $ canpe create sample_repository
-create directory: ./.canpe_repos/sample_repository/templates
-copy ./.canpe_repos/sample_repository/binding.yml
+
+create directory: /Users/Yoshinori/.canpe_repos
+create directory: /Users/Yoshinori/.canpe_repos/sample_repository
+copy: /Users/Yoshinori/.canpe_repos/sample_repository/binding.yml
+create directory: /Users/Yoshinori/.canpe_repos/sample_repository/templates
+copy: /Users/Yoshinori/.canpe_repos/sample_repository/templates/sample.html.erb
+```
+
+Each repository has `templates` directory, and `binding.yml`.
+
+```
+$ tree .canpe_repos
+
+.canpe_repos
+`-- sample_repository
+    |-- binding.yml
+    `-- templates
+        `-- sample.html.erb
+
+2 directories, 2 files
+
 ```
 
 `binding.yml` defines the variables which you can access from templates.
@@ -28,21 +47,25 @@ variables:
 
 Set your template files under the templates directory.
 Each file is automatically evaluated as ERB template.
+And you can access variables via `canpe` object.
 
 ```
+$ cat .canpe_repos/sample_repository/templates/sample.html.erb 
+
 <%= canpe[:sample_string] %>
 <%= canpe[:sample_array].join ', ' %>
 ``` 
 
-Then run `canpe generate sample_repository`.
+To generate files from repository, you can use `canpe generate` command.
 
 ```
 $ canpe generate sample_repository
-working directory (/Users/Yoshinori/gem_projects/canpe) ? 
+
+working directory (/Users/Yoshinori) ? 
 you need to set variables to generate codes!
 1: sample_string (string) 
 2: sample_array (array) 
-
+  
 If you want to stop setting array, let it blank and press enter.
 sample_string ?) Hello, world
 sample_array[0] ?) 1
@@ -50,18 +73,12 @@ sample_array[1] ?) 2
 sample_array[2] ?) 3
 sample_array[3] ?) 
 finished variable settings: {"sample_string"=>"Hello, world", "sample_array"=>["1", "2", "3"]}
-copy: /Users/Yoshinori/gem_projects/canpe/hello
-
-```
-
-If you set sample_string as 'Hello, world', and sample_array as [1, 2, 3],
-This template is rendered like this.
-
-```
+copy: /Users/Yoshinori/sample.html.erb
+  
+$ cat sample.html.erb
 Hello, world
 1, 2, 3
 ```
-
 
 ## Development
 
